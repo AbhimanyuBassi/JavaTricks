@@ -1,4 +1,4 @@
-package work;
+package work.basics;
 
 @FunctionalInterface
 public interface MyInterface {

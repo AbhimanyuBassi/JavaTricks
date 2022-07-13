@@ -1,4 +1,4 @@
-package work;
+package work.basics;
 
 import static java.lang.Thread.sleep;
 

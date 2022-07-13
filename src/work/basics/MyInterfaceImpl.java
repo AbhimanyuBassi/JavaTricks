@@ -1,4 +1,4 @@
-package work;
+package work.basics;
 
 public class MyInterfaceImpl implements MyInterface{
     @Override

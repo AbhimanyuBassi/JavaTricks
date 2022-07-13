@@ -1,6 +1,7 @@
 package work;
 
-import java.util.function.Predicate;
+import work.basics.MyInterface;
+import work.basics.MyInterfaceImpl;
 
 public class Main {
 
