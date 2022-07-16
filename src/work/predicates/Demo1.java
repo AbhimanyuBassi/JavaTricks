@@ -35,11 +35,11 @@ public class Demo1 {
         employeeList.add(new Employee("Abhi",200000,12));
         employeeList.add(new Employee("Kate",50000,3));
 
-        Predicate<Employee> emp = e->(e.experience>3 && e.salary>25000);
+      /*  Predicate<Employee> emp = e->(e.experience>3 && e.salary>25000);
         for (Employee e: employeeList) {
             if(emp.test(e))
                 System.out.println(e.ename);
-        }
+        }*/
 
 
 
