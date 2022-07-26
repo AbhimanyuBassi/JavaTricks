@@ -1,4 +1,4 @@
-package work.EmployeeSalary;
+package work.employeeSalary;
 
 
 import work.predicates.Employee;
