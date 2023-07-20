@@ -1,0 +1,70 @@
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+
+public class XMLParser {
+
+    public static Map<String, String> parseXMLToMap(String xmlContent) {
+        Map<String, String> tagValueMap = new HashMap<>();
+
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            InputStream inputStream = new ByteArrayInputStream(xmlContent.getBytes("UTF-8"));
+            Document document = builder.parse(inputStream);
+
+            // Normalize the XML document to handle whitespaces and other formatting issues
+            document.getDocumentElement().normalize();
+
+            // Recursively traverse the document and extract tag names and values
+            traverseNode(document.getDocumentElement(), tagValueMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return tagValueMap;
+    }
+
+    private static void traverseNode(Node node, Map<String, String> tagValueMap) {
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+            String tagName = node.getNodeName();
+            String tagValue = "";
+
+            NodeList children = node.getChildNodes();
+            if (children.getLength() == 1 && children.item(0).getNodeType() == Node.TEXT_NODE) {
+                tagValue = children.item(0).getNodeValue().trim();
+            }
+
+            tagValueMap.put(tagName, tagValue);
+
+            // Recursively process child nodes if present
+            NodeList childNodes = node.getChildNodes();
+            for (int i = 0; i < childNodes.getLength(); i++) {
+                Node childNode = childNodes.item(i);
+                traverseNode(childNode, tagValueMap);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        // Sample XML content for testing
+        String xmlContent = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                            "<root>" +
+                            "   <name>John Doe</name>" +
+                            "   <age>30</age>" +
+                            "   <address>" +
+                            "       <city>New York</city>" +
+                            "       <zip>10001</zip>" +
+                            "   </address>" +
+                            "</root>";
+
+        Map<String, String> tagValueMap = parseXMLToMap(xmlContent);
+
+        // Print the extracted tag names and values
+        for (Map.Entry<String, String> entry : tagValueMap.entrySet()) {
+            System.out.println("Tag Name: " + entry.getKey() + ", Tag Value: " + entry.getValue());
+        }
+    }
+}
